@@ -6,7 +6,7 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ children }) => (
-  <Navbar bg="dark" variant="dark">
+  <Navbar style={{ background: '#000' }}>
     <Navbar.Brand href="#home">{children}</Navbar.Brand>
   </Navbar>
 )
