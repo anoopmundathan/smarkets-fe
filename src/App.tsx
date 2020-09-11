@@ -1,12 +1,17 @@
 import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
-import ListGroup from 'react-bootstrap/ListGroup'
 import Spinner from 'react-bootstrap/Spinner'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Card from 'react-bootstrap/Card'
 import './App.css'
+
 import logo from './smarkets-logo.svg'
+
+import { slide as Menu } from 'react-burger-menu'
+import ListGroupItem from 'react-bootstrap/esm/ListGroupItem'
+import NavBar from './components/NavBar'
 
 function App() {
   const [eventTypes, setEventTypes] = React.useState<string[]>([])
@@ -45,7 +50,11 @@ function App() {
   const renderEventTypes = () => {
     return eventTypes.map((item) => {
       return (
-        <ListGroup.Item onClick={() => handleSelect(item)}>
+        <ListGroup.Item
+          key={item}
+          onClick={() => handleSelect(item)}
+          style={{ background: '#343a40', color: '#fff', borderRadius: 0 }}
+        >
           {item}
         </ListGroup.Item>
       )
@@ -62,36 +71,67 @@ function App() {
     return (
       events &&
       events.map((item: any) => {
-        return <div>{item.name}</div>
+        return (
+          <Card style={{ width: '18rem', height: '100px' }}>
+            <Card.Body>
+              <Card.Text>{item.name}</Card.Text>
+            </Card.Body>
+          </Card>
+        )
       })
     )
   }
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">
-          <img
-            alt=""
-            src={logo}
-            width="100"
-            height="50"
-            className="d-inline-block align-top"
-          />
-        </Navbar.Brand>
-      </Navbar>
-      <Container>
-        <Row xs={2} md={2} lg={2}>
-          <Col>
+      <NavBar>
+        <img
+          alt="smarkets logo"
+          src={logo}
+          width="100"
+          height="50"
+          className="d-inline-block align-top"
+        />
+      </NavBar>
+      <div>
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             {loadingEventTypes ? (
               showSpinner()
             ) : (
-              <ListGroup>{renderEventTypes()}</ListGroup>
+              <ListGroup style={{ background: '#000' }}>
+                {renderEventTypes()}
+              </ListGroup>
             )}
-          </Col>
-          <Col>{loadingEvents ? showSpinner() : renderEvents()}</Col>
-        </Row>
-      </Container>
+          </div>
+          {/* <Row
+            style={{
+              border: '1px solid red',
+              paddingLeft: '3%',
+              paddingTop: '10px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+            }}
+          >
+            {loadingEvents ? showSpinner() : renderEvents()}
+          </Row> */}
+
+          <Row>
+            <Col>{loadingEvents ? showSpinner() : renderEvents()}</Col>
+          </Row>
+        </div>
+      </div>
     </>
   )
 }
