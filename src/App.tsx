@@ -6,6 +6,7 @@ import logo from './smarkets-logo.svg'
 
 import NavBar from './components/NavBar'
 import EventTypeList from './components/EventTypeList'
+import { getAllEventTypes } from './apis'
 
 const App: React.FC = () => {
   const [eventTypes, setEventTypes] = React.useState<string[]>([])
@@ -13,12 +14,10 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     setLoading(true)
-    fetch('http://localhost:8000/api/event-types')
-      .then((res) => res.json())
-      .then((data: string[]) => {
-        setEventTypes(data)
-        setLoading(false)
-      })
+    getAllEventTypes().then((data: string[]) => {
+      setEventTypes(data)
+      setLoading(false)
+    })
   }, [])
 
   const showSpinner = () => (

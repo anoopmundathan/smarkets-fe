@@ -1,7 +1,8 @@
 import React from 'react'
 import Accordion from 'react-bootstrap/Accordion'
-import { Event, EventResponse } from '../interfaces'
+import { Event } from '../interfaces'
 import EventList from './EventList'
+import { getEvents } from '../apis'
 
 interface EventTypeListItemProps {
   name: string
@@ -19,11 +20,9 @@ const EventTypeListItem: React.FC<Props> = ({ name, index }) => {
   }
 
   const handleClick = () => {
-    fetch(`http://localhost:8000/api/events/${name}`)
-      .then((res: Response) => res.json())
-      .then((data: EventResponse) => {
-        setEvents(data.events)
-      })
+    getEvents(name).then((data: Event[]) => {
+      setEvents(data)
+    })
   }
 
   return (
