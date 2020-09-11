@@ -1,12 +1,11 @@
 import React from 'react'
-import Spinner from 'react-bootstrap/Spinner'
-import './App.css'
 
 import logo from './smarkets-logo.svg'
 
 import NavBar from './components/NavBar'
 import EventTypeList from './components/EventTypeList'
 import { getAllEventTypes } from './apis'
+import LoadingIndicator from './components/LoadingIndicator'
 
 const App: React.FC = () => {
   const [eventTypes, setEventTypes] = React.useState<string[]>([])
@@ -20,21 +19,6 @@ const App: React.FC = () => {
     })
   }, [])
 
-  const showSpinner = () => (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '20px',
-      }}
-    >
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
-    </div>
-  )
-
   return (
     <>
       <NavBar>
@@ -46,7 +30,11 @@ const App: React.FC = () => {
           className="d-inline-block align-top"
         />
       </NavBar>
-      {loading ? showSpinner() : <EventTypeList eventTypes={eventTypes} />}
+      {loading ? (
+        <LoadingIndicator />
+      ) : (
+        <EventTypeList eventTypes={eventTypes} />
+      )}
     </>
   )
 }

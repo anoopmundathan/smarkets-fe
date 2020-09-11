@@ -22,7 +22,7 @@ const EventList: React.FC<Props> = ({ events }) => {
       </p>
     ))
 
-  return <>{renderEventList()}</>
+  return <>{events.length > 0 ? renderEventList() : <p>No Events</p>}</>
 }
 
 export default EventList
